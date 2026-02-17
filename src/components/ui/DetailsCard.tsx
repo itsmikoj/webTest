@@ -1,7 +1,9 @@
 "use client";
 
+import * as React from "react";
 import { HTMLAttributes, forwardRef } from "react";
 import { cn } from "@/lib/utils/cn";
+import { Copy, Check } from "lucide-react";
 
 export interface DetailField {
   label: string;
@@ -26,36 +28,36 @@ export const DetailsCard = forwardRef<HTMLDivElement, DetailsCardProps>(
       <div
         ref={ref}
         className={cn(
-          "bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700",
+          "bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700",
           className,
         )}
         {...props}
       >
         {title && (
-          <div className="p-6 border-b border-slate-200 dark:border-slate-700">
-            <h2 className="text-lg font-semibold text-slate-900 dark:text-white">
+          <div className="px-5 py-4 border-b border-slate-200 dark:border-slate-700">
+            <h2 className="text-base font-semibold text-slate-900 dark:text-white">
               {title}
             </h2>
           </div>
         )}
 
-        <div className="p-6 space-y-6">
+        <div className="p-5 space-y-6">
           {sections?.map((section, sIndex) => (
             <div key={sIndex}>
               {section.title && (
-                <h3 className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-3">
+                <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">
                   {section.title}
-                </h3>
+                </p>
               )}
               <div
                 className={cn(
-                  section.fields.length > 1 &&
-                    "grid grid-cols-1 md:grid-cols-2 gap-4",
-                  section.fields.length === 3 && "md:grid-cols-3",
+                  "grid grid-cols-1 gap-3",
+                  section.fields.length > 1 && "sm:grid-cols-2",
+                  section.fields.length === 3 && "sm:grid-cols-3",
                 )}
               >
                 {section.fields.map((field, fIndex) => (
-                  <DetailField key={fIndex} {...field} />
+                  <DetailFieldItem key={fIndex} {...field} />
                 ))}
               </div>
             </div>
@@ -69,7 +71,7 @@ export const DetailsCard = forwardRef<HTMLDivElement, DetailsCardProps>(
 
 DetailsCard.displayName = "DetailsCard";
 
-function DetailField({ label, value, copyable }: DetailField) {
+function DetailFieldItem({ label, value, copyable }: DetailField) {
   const [copied, setCopied] = React.useState(false);
 
   const handleCopy = () => {
@@ -82,34 +84,35 @@ function DetailField({ label, value, copyable }: DetailField) {
 
   return (
     <div>
-      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+      <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wide">
         {label}
-      </label>
+      </p>
       {copyable ? (
-        <div className="flex gap-2">
-          <input
-            type="text"
-            value={String(value)}
-            readOnly
-            className="flex-1 px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg font-mono text-sm"
-          />
+        <div className="flex gap-2 items-stretch">
+          <div className="flex-1 min-w-0 px-3 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg">
+            <p className="font-mono text-xs text-slate-700 dark:text-slate-300 truncate">
+              {String(value)}
+            </p>
+          </div>
           <button
             onClick={handleCopy}
-            className="px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="flex-shrink-0 flex items-center gap-1.5 px-3 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs font-medium"
           >
-            {copied ? "Copied" : "Copy"}
+            {copied ? (
+              <Check className="w-3.5 h-3.5" />
+            ) : (
+              <Copy className="w-3.5 h-3.5" />
+            )}
+            <span>{copied ? "Copied" : "Copy"}</span>
           </button>
         </div>
       ) : (
-        <input
-          type="text"
-          value={String(value)}
-          readOnly
-          className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm"
-        />
+        <div className="px-3 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg">
+          <p className="text-sm text-slate-800 dark:text-slate-200 truncate">
+            {String(value)}
+          </p>
+        </div>
       )}
     </div>
   );
 }
-
-import * as React from "react";

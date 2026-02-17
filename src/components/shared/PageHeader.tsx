@@ -24,48 +24,38 @@ export function PageHeader({
   isRefreshing = false,
 }: PageHeaderProps) {
   return (
-    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-      <div>
-        <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
+    <div className="flex items-center justify-between gap-3">
+      <div className="min-w-0">
+        <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white truncate">
           {title}
         </h1>
-        <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+        <p className="text-sm text-slate-600 dark:text-slate-400 mt-0.5 hidden sm:block">
           {description}
         </p>
       </div>
 
       {showFilters && (
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 flex-shrink-0">
           {filters && onFiltersChange && (
             <DashboardFilters
               filters={filters}
               onFiltersChange={onFiltersChange}
+              onResetFilters={onResetFilters}
             />
           )}
 
-          <div className="flex items-center gap-2">
-            {onResetFilters && (
-              <button
-                onClick={onResetFilters}
-                className="px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
-              >
-                Reset
-              </button>
-            )}
-
-            {onRefresh && (
-              <button
-                onClick={onRefresh}
-                disabled={isRefreshing}
-                className="p-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors disabled:opacity-50"
-                title="Refresh data"
-              >
-                <RefreshCw
-                  className={`w-4 h-4 ${isRefreshing ? "animate-spin" : ""}`}
-                />
-              </button>
-            )}
-          </div>
+          {onRefresh && (
+            <button
+              onClick={onRefresh}
+              disabled={isRefreshing}
+              className="p-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors disabled:opacity-50"
+              title="Refresh data"
+            >
+              <RefreshCw
+                className={`w-4 h-4 ${isRefreshing ? "animate-spin" : ""}`}
+              />
+            </button>
+          )}
         </div>
       )}
     </div>

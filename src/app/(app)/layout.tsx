@@ -4,6 +4,7 @@ import { Header } from "@/components/layout/Header";
 import { App } from "@/types";
 import { useApp } from "@/contexts/AppContext";
 import { Sidebar } from "@/components/layout/Sidebar";
+import { BottomNav } from "@/components/layout/BottomNav";
 import { useAuth } from "@/contexts/AuthContext";
 
 function AppContent({ children }: { children: React.ReactNode }) {
@@ -26,11 +27,12 @@ function AppContent({ children }: { children: React.ReactNode }) {
         onSelectApp={handleSelectApp}
       />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <Header appName={selectedApp?.name!} user={user} onLogout={handleLogout} />
+        <Header appName={selectedApp?.name!} user={user} onLogout={handleLogout} apps={apps} selectedApp={selectedApp} onSelectApp={handleSelectApp} />
         <main className="flex-1 overflow-y-auto">
-          <div className="p-6">{children}</div>
+          <div className="p-4 sm:p-6 pb-20 md:pb-6">{children}</div>
         </main>
       </div>
+      <BottomNav />
     </div>
   );
 }

@@ -27,9 +27,9 @@ const colorClasses = {
 };
 
 const gridCols = {
-  2: "grid-cols-1 sm:grid-cols-2",
-  3: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
-  4: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4",
+  2: "grid-cols-2",
+  3: "grid-cols-2 lg:grid-cols-3",
+  4: "grid-cols-2 lg:grid-cols-4",
 };
 
 export const StatsGrid = forwardRef<HTMLDivElement, StatsGridProps>(
@@ -45,24 +45,24 @@ export const StatsGrid = forwardRef<HTMLDivElement, StatsGridProps>(
           return (
             <div
               key={index}
-              className="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 p-6"
+              className="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 p-4 sm:p-6"
             >
-              <div className="flex items-center gap-4 mb-3">
+              <div className="flex items-center gap-3 mb-2">
                 {Icon && stat.color && (
                   <div
                     className={cn(
-                      "w-12 h-12 rounded-lg bg-gradient-to-br flex items-center justify-center",
+                      "w-9 h-9 sm:w-12 sm:h-12 rounded-lg bg-gradient-to-br flex items-center justify-center flex-shrink-0",
                       colorClasses[stat.color],
                     )}
                   >
-                    <Icon className="w-6 h-6 text-white" />
+                    <Icon className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
                   </div>
                 )}
               </div>
-              <p className="text-sm text-slate-600 dark:text-slate-400 mb-1">
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mb-1">
                 {stat.label}
               </p>
-              <p className="text-2xl font-bold text-slate-900 dark:text-white">
+              <p className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
                 {stat.value}
               </p>
             </div>

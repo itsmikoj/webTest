@@ -89,7 +89,7 @@ export default function SubscriptionsPage() {
             </p>
           </CardHeader>
           <CardContent>
-            <div className="h-80">
+            <div className="h-56 sm:h-80">
               <TimeSeriesChart
                 data={trendData}
                 showInstalls={false}
@@ -108,7 +108,7 @@ export default function SubscriptionsPage() {
             </p>
           </CardHeader>
           <CardContent>
-            <div className="h-80">
+            <div className="h-56 sm:h-80">
               <TimeSeriesChart
                 data={trendData}
                 showInstalls={false}

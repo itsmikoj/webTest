@@ -74,9 +74,9 @@ export function LinkDetails({ link }: LinkDetailsProps) {
   ];
 
   return (
-    <>
+    <div className="space-y-4">
       <StatsGrid stats={stats} columns={4} />
       <DetailsCard title="Link Details" sections={sections} />
-    </>
+    </div>
   );
 }

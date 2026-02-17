@@ -61,7 +61,7 @@ export default function TrackingLinkDetailsPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         title={link.link_name}
         description="View and manage tracking link details"

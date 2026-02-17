@@ -64,17 +64,20 @@ export default function TrackingLinksPage() {
         isRefreshing={isLoading}
       />
 
-      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        <SearchBar value={searchTerm} onChange={setSearchTerm} />
-        <div className="flex items-center gap-2">
-          <ViewModeToggle value={viewMode} onChange={setViewMode} />
-          <button
-            onClick={() => setShowCreateModal(true)}
-            className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium text-sm"
-          >
-            <Plus className="w-4 h-4" /> Create Link
-          </button>
+      <div className="flex items-center gap-2 w-full">
+        <div className="flex-1 min-w-0">
+          <SearchBar value={searchTerm} onChange={setSearchTerm} />
         </div>
+        <div className="hidden sm:block flex-shrink-0">
+          <ViewModeToggle value={viewMode} onChange={setViewMode} />
+        </div>
+        <button
+          onClick={() => setShowCreateModal(true)}
+          className="flex items-center gap-2 px-3 sm:px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium text-sm flex-shrink-0"
+        >
+          <Plus className="w-4 h-4" />
+          <span className="hidden sm:inline">Create Link</span>
+        </button>
       </div>
 
       {isLoading ? (
@@ -88,8 +91,24 @@ export default function TrackingLinksPage() {
               : "Create your first tracking link"
           }
         />
-      ) : viewMode === "grid" ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      ) : viewMode === "list" ? (
+        <>
+          <div className="hidden sm:block">
+            <LinkTable links={filteredLinks} onDelete={handleDelete} />
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:hidden">
+            {filteredLinks.map((link) => (
+              <LinkCard
+                key={link.id}
+                link={link}
+                onDelete={handleDelete}
+                onClick={() => router.push(`/dashboard/links/${link.id}`)}
+              />
+            ))}
+          </div>
+        </>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {filteredLinks.map((link) => (
             <LinkCard
               key={link.id}
@@ -99,8 +118,6 @@ export default function TrackingLinksPage() {
             />
           ))}
         </div>
-      ) : (
-        <LinkTable links={filteredLinks} onDelete={handleDelete} />
       )}
 
       <Modal

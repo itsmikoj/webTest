@@ -102,7 +102,7 @@ export function TimeSeriesChart({
     <ResponsiveContainer width="100%" height="100%">
       <LineChart
         data={chartData}
-        margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
+        margin={{ top: 5, right: 10, left: -10, bottom: 5 }}
       >
         <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
         <XAxis

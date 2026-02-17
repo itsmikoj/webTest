@@ -78,17 +78,20 @@ function FormField({
     onChange(field.name, e.target.value);
   };
 
+  const inputClass =
+    "w-full px-4 py-3 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm transition-colors";
+
   return (
     <div>
       <label
         htmlFor={field.name}
-        className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
+        className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5"
       >
         {field.label}{" "}
         {field.required && <span className="text-red-500">*</span>}
         {field.description && (
-          <span className="text-slate-500 dark:text-slate-400 font-normal ml-2">
-            {field.description}
+          <span className="text-slate-400 dark:text-slate-500 font-normal ml-1">
+            ({field.description})
           </span>
         )}
       </label>
@@ -101,7 +104,7 @@ function FormField({
           placeholder={field.placeholder}
           required={field.required}
           rows={3}
-          className="w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+          className={inputClass}
         />
       ) : field.options ? (
         <select
@@ -109,7 +112,7 @@ function FormField({
           name={field.name}
           value={value ?? ""}
           onChange={handleChange}
-          className="w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+          className={inputClass}
         >
           <option value="">Select...</option>
           {field.options.map((opt) => (
@@ -127,7 +130,7 @@ function FormField({
           onChange={handleChange}
           placeholder={field.placeholder}
           required={field.required}
-          className="w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+          className={inputClass}
         />
       )}
     </div>
@@ -160,23 +163,24 @@ function KeyValueField({
 
   return (
     <div>
-      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">
         {label}
       </label>
+
       {pairs.length > 0 && (
         <div className="mb-3 space-y-2">
           {pairs.map((pair) => (
             <div
               key={pair.key}
-              className="flex items-center gap-2 bg-slate-50 dark:bg-slate-900/50 rounded-lg p-3"
+              className="flex items-center gap-2 bg-slate-50 dark:bg-slate-900/50 rounded-xl px-3 py-2.5"
             >
-              <span className="text-sm font-mono text-slate-700 dark:text-slate-300 flex-1">
-                {pair.key}: {pair.value}
+              <span className="text-sm font-mono text-slate-700 dark:text-slate-300 flex-1 truncate">
+                <span className="text-slate-500">{pair.key}:</span> {pair.value}
               </span>
               <button
                 type="button"
                 onClick={() => onRemove(pair.key)}
-                className="text-red-500 hover:text-red-700 dark:hover:text-red-400"
+                className="flex-shrink-0 p-1 text-red-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -184,28 +188,30 @@ function KeyValueField({
           ))}
         </div>
       )}
-      <div className="flex gap-2">
+
+      <div className="flex flex-col sm:flex-row gap-2">
         <input
           type="text"
           value={key}
           onChange={(e) => setKey(e.target.value)}
           placeholder="Key"
-          className="flex-1 px-4 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+          className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm"
         />
         <input
           type="text"
           value={val}
           onChange={(e) => setVal(e.target.value)}
           placeholder={valueName}
-          className="flex-1 px-4 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+          className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm"
         />
         <button
           type="button"
           onClick={handleAdd}
           disabled={!key || !val}
-          className="px-4 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-700 dark:bg-slate-600 text-white rounded-xl hover:bg-slate-800 dark:hover:bg-slate-500 disabled:opacity-40 disabled:cursor-not-allowed transition-colors text-sm font-medium"
         >
           <Plus className="w-4 h-4" />
+          <span className="sm:hidden">Add Parameter</span>
         </button>
       </div>
     </div>

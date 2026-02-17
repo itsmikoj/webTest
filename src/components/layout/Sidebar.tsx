@@ -56,36 +56,24 @@ const globalTabs = [
 export function Sidebar({ selectedApp, apps, onSelectApp }: SidebarProps) {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => {
-      const mobile = window.innerWidth < 1030;
-      setIsMobile(mobile);
-      if (mobile) {
+    const checkTablet = () => {
+      if (window.innerWidth < 1030 && window.innerWidth >= 768) {
         setIsCollapsed(true);
       }
     };
-
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    checkTablet();
+    window.addEventListener("resize", checkTablet);
+    return () => window.removeEventListener("resize", checkTablet);
   }, []);
 
   return (
     <>
-      {isMobile && !isCollapsed && (
-        <div
-          className="fixed inset-0 bg-black/50 lg:hidden z-40"
-          onClick={() => setIsCollapsed(true)}
-        />
-      )}
-
       <aside
         className={cn(
-          "bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-700 flex flex-col h-screen sticky top-0 transition-all duration-300 z-50",
+          "hidden md:flex bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-700 flex-col h-screen sticky top-0 transition-all duration-300 z-50",
           isCollapsed ? "w-20" : "w-72",
-          isMobile && !isCollapsed && "fixed left-0 top-0",
         )}
       >
         <div

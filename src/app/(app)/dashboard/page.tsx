@@ -94,7 +94,7 @@ export default function DashboardPage() {
           </p>
         </CardHeader>
         <CardContent>
-          <div className="h-80">
+          <div className="h-56 sm:h-80">
             <TimeSeriesChart data={trendData} showInstalls showSubscriptions />
           </div>
         </CardContent>
