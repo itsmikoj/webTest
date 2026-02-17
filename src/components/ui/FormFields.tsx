@@ -189,29 +189,30 @@ function KeyValueField({
         </div>
       )}
 
-      <div className="flex flex-col sm:flex-row gap-2">
+      {/* Always a single row */}
+      <div className="flex gap-2">
         <input
           type="text"
           value={key}
           onChange={(e) => setKey(e.target.value)}
           placeholder="Key"
-          className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm"
+          className="flex-1 min-w-0 px-3 py-2.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm"
         />
         <input
           type="text"
           value={val}
           onChange={(e) => setVal(e.target.value)}
           placeholder={valueName}
-          className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm"
+          className="flex-1 min-w-0 px-3 py-2.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm"
         />
         <button
           type="button"
           onClick={handleAdd}
           disabled={!key || !val}
-          className="flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-700 dark:bg-slate-600 text-white rounded-xl hover:bg-slate-800 dark:hover:bg-slate-500 disabled:opacity-40 disabled:cursor-not-allowed transition-colors text-sm font-medium"
+          title="Add parameter"
+          className="flex-shrink-0 flex items-center justify-center w-10 h-10 bg-slate-700 dark:bg-slate-600 text-white rounded-xl hover:bg-slate-800 dark:hover:bg-slate-500 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
         >
           <Plus className="w-4 h-4" />
-          <span className="sm:hidden">Add Parameter</span>
         </button>
       </div>
     </div>

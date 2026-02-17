@@ -48,3 +48,7 @@ body {
 .safe-area-bottom {
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
+
+.pb-safe {
+  padding-bottom: max(4rem, calc(1rem + env(safe-area-inset-bottom, 0px)));
+}

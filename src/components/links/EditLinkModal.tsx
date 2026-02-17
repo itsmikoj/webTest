@@ -89,42 +89,51 @@ export function EditLinkModal({
       title="Edit Tracking Link"
       size="lg"
     >
-      <form onSubmit={handleSubmit}>
-        <FormFields
-          fields={formFields}
-          values={formData}
-          onChange={(name, value) =>
-            setFormData((prev) => ({ ...prev, [name]: value }))
-          }
-          keyValueFields={{
-            label: "Custom Parameters",
-            valueName: "Value",
-            pairs: customParams,
-            onAdd: (k, v) =>
-              setFormData((prev) => ({
-                ...prev,
-                custom_params: { ...prev.custom_params, [k]: v },
-              })),
-            onRemove: (k) =>
-              setFormData((prev) => {
-                const newParams = { ...prev.custom_params };
-                delete newParams[k];
-                return { ...prev, custom_params: newParams };
-              }),
-          }}
-        />
-        <div className="flex gap-3 pt-6 border-t border-slate-200 dark:border-slate-700">
-          <button
+      <form
+        id="edit-link-form"
+        onSubmit={handleSubmit}
+        className="flex flex-col min-h-0 flex-1"
+      >
+        {/* Scrollable fields area */}
+        <div className="flex-1 overflow-y-auto p-5 sm:p-6">
+          <FormFields
+            fields={formFields}
+            values={formData}
+            onChange={(name, value) =>
+              setFormData((prev) => ({ ...prev, [name]: value }))
+            }
+            keyValueFields={{
+              label: "Custom Parameters",
+              valueName: "Value",
+              pairs: customParams,
+              onAdd: (k, v) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  custom_params: { ...prev.custom_params, [k]: v },
+                })),
+              onRemove: (k) =>
+                setFormData((prev) => {
+                  const newParams = { ...prev.custom_params };
+                  delete newParams[k];
+                  return { ...prev, custom_params: newParams };
+                }),
+            }}
+          />
+        </div>
+
+        {/* Fixed action buttons — always visible */}
+        <div className="flex-shrink-0 flex gap-3 px-5 sm:px-6 py-4 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+<button
             type="button"
             onClick={onClose}
-            className="flex-1 px-6 py-2.5 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 font-medium"
+            className="flex-1 px-6 py-2 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 font-medium"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={saving || !formData.link_name}
-            className="flex-1 px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium disabled:opacity-50"
+            className="flex-1 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium disabled:opacity-50"
           >
             {saving ? "Saving..." : "Save Changes"}
           </button>

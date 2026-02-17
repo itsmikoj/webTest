@@ -9,6 +9,7 @@ interface ModalProps extends HTMLAttributes<HTMLDivElement> {
   onClose: () => void;
   title: string;
   children: React.ReactNode;
+  footer?: React.ReactNode;
   size?: "sm" | "md" | "lg" | "xl";
 }
 
@@ -21,9 +22,19 @@ const sizes = {
 
 export const Modal = forwardRef<HTMLDivElement, ModalProps>(
   (
-    { isOpen, onClose, title, children, size = "md", className, ...props },
+    {
+      isOpen,
+      onClose,
+      title,
+      children,
+      footer,
+      size = "md",
+      className,
+      ...props
+    },
     ref,
   ) => {
+    // Prevent body scroll when open
     useEffect(() => {
       if (isOpen) {
         document.body.style.overflow = "hidden";
@@ -43,22 +54,23 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
         onClick={onClose}
       >
         <div
-          ref={ref}
           className={cn(
-            "bg-white dark:bg-slate-800 w-full max-h-[92dvh] overflow-y-auto",
+            "bg-white dark:bg-slate-800 w-full max-h-[92dvh] flex flex-col",
             "rounded-t-2xl sm:rounded-xl",
-            "sm:w-full shadow-2xl",
+            "sm:w-full shadow-2xl pb-safe",
             sizes[size],
             className,
           )}
           onClick={(e) => e.stopPropagation()}
           {...props}
         >
-          <div className="flex justify-center pt-3 pb-1 sm:hidden">
+          {/* Drag handle — mobile only */}
+          <div className="flex justify-center pt-3 pb-1 sm:hidden flex-shrink-0">
             <div className="w-10 h-1 rounded-full bg-slate-300 dark:bg-slate-600" />
           </div>
 
-          <div className="sticky top-0 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-5 py-4 flex items-center justify-between">
+          {/* Header */}
+          <div className="flex-shrink-0 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-5 py-4 flex items-center justify-between">
             <h2 className="text-lg sm:text-xl font-semibold text-slate-900 dark:text-white">
               {title}
             </h2>
@@ -70,7 +82,16 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
             </button>
           </div>
 
-          <div className="p-5 sm:p-6">{children}</div>
+          {/* Content — flex col so children can self-manage scroll+footer */}
+          <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
+            {children}
+          </div>
+
+          {footer && (
+            <div className="flex-shrink-0 border-t border-slate-200 dark:border-slate-700  bg-white dark:bg-slate-800 pb-safe">
+              {footer}
+            </div>
+          )}
         </div>
       </div>
     );
