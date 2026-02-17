@@ -50,5 +50,5 @@ body {
 }
 
 .pb-safe {
-  padding-bottom: max(4rem, calc(1rem + env(safe-area-inset-bottom, 0px)));
+  padding-bottom: max(5rem, calc(1.5rem + env(safe-area-inset-bottom, 0px)));
 }

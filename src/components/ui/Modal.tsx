@@ -34,7 +34,6 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
     },
     ref,
   ) => {
-    // Prevent body scroll when open
     useEffect(() => {
       if (isOpen) {
         document.body.style.overflow = "hidden";
@@ -54,23 +53,22 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
         onClick={onClose}
       >
         <div
+          ref={ref}
           className={cn(
-            "bg-white dark:bg-slate-800 w-full max-h-[92dvh] flex flex-col",
+            "bg-white dark:bg-slate-800 w-full max-h-[92dvh] flex flex-col overflow-hidden",
             "rounded-t-2xl sm:rounded-xl",
-            "sm:w-full shadow-2xl pb-safe",
+            "sm:w-full shadow-2xl",
             sizes[size],
             className,
           )}
           onClick={(e) => e.stopPropagation()}
           {...props}
         >
-          {/* Drag handle — mobile only */}
-          <div className="flex justify-center pt-3 pb-1 sm:hidden flex-shrink-0">
+          <div className="flex-shrink-0 flex justify-center pt-3 pb-1 sm:hidden">
             <div className="w-10 h-1 rounded-full bg-slate-300 dark:bg-slate-600" />
           </div>
 
-          {/* Header */}
-          <div className="flex-shrink-0 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-5 py-4 flex items-center justify-between">
+          <div className="flex-shrink-0 border-b border-slate-200 dark:border-slate-700 px-5 py-4 flex items-center justify-between">
             <h2 className="text-lg sm:text-xl font-semibold text-slate-900 dark:text-white">
               {title}
             </h2>
@@ -82,13 +80,10 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
             </button>
           </div>
 
-          {/* Content — flex col so children can self-manage scroll+footer */}
-          <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
-            {children}
-          </div>
+          <div className="flex-1 min-h-0 flex flex-col">{children}</div>
 
           {footer && (
-            <div className="flex-shrink-0 border-t border-slate-200 dark:border-slate-700  bg-white dark:bg-slate-800 pb-safe">
+            <div className="flex-shrink-0 pb-safe sm:pb-0 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
               {footer}
             </div>
           )}

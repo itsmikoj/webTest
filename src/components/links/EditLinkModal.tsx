@@ -94,7 +94,6 @@ export function EditLinkModal({
         onSubmit={handleSubmit}
         className="flex flex-col min-h-0 flex-1"
       >
-        {/* Scrollable fields area */}
         <div className="flex-1 overflow-y-auto p-5 sm:p-6">
           <FormFields
             fields={formFields}
@@ -121,9 +120,8 @@ export function EditLinkModal({
           />
         </div>
 
-        {/* Fixed action buttons — always visible */}
-        <div className="flex-shrink-0 flex gap-3 px-5 sm:px-6 py-4 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
-<button
+        <div className="flex-shrink-0 flex gap-3 px-5 sm:px-6 py-4 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 pb-safe sm:pb-5">
+          <button
             type="button"
             onClick={onClose}
             className="flex-1 px-6 py-2 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 font-medium"
