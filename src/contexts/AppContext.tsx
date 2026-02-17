@@ -31,7 +31,10 @@ const PUBLIC_ROUTES = ["/login", "/"];
 export function AppProvider({ children }: { children: ReactNode }) {
   const [apps, setApps] = useState<App[]>([]);
   const [selectedApp, setSelectedApp] = useState<App | null>(null);
-  const [savedApp, setSavedApp] = useLocalStorage<App | null>(STORAGE_KEYS.app, null);
+  const [savedApp, setSavedApp] = useLocalStorage<App | null>(
+    STORAGE_KEYS.app,
+    null,
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuth();
@@ -64,7 +67,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
             setSavedApp(mappedApps[0]);
           }
         } else {
-          setSelectedApp(savedApp);
+          const app = mappedApps.find((app) => app.id === savedApp.id)!;
+          setSelectedApp(app);
+          setSavedApp(app);
         }
       } catch (err: any) {
         if (err.status === 401) {
@@ -93,11 +98,18 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const handleSelctedApp = (app: App) => {
     setSelectedApp(app);
     setSavedApp(app);
-  }
+  };
 
   return (
     <AppContext.Provider
-      value={{ selectedApp, setSelectedApp: handleSelctedApp, apps, isLoading, error, resetApps }}
+      value={{
+        selectedApp,
+        setSelectedApp: handleSelctedApp,
+        apps,
+        isLoading,
+        error,
+        resetApps,
+      }}
     >
       {children}
     </AppContext.Provider>
